@@ -38,9 +38,24 @@ Personal dotfiles for macOS and Ubuntu, managed with [GNU Stow](https://www.gnu.
   ```bash
   ./copy-confidential-from-machine.sh
   ```
-  This populates `confidential/` from `$HOME` and `$HOME/.config` (credentials, .boto, .azure, .gsutil, sops/age/keys.txt, etc.). Commit and push as needed (this is a personal repo).
+  This populates `confidential/` from `$HOME` and `$HOME/.config` (credentials, .boto, .azure, .gsutil, sops/age/keys.txt, etc.).
 
-- **Deploy from repo to this machine:**
+- **Encrypt and commit** (SOPS + age; so you can push without GitHub blocking secrets):
+  ```bash
+  make encrypt-confidential   # creates confidential.tar.enc from confidential/
+  make commit-encrypted-confidential   # stages confidential.tar.enc
+  git commit -m "Update encrypted confidential" && git push
+  ```
+  Requires: `sops`, `age`, and `.sops-age-recipients` with your age public key (or set `SOPS_AGE_RECIPIENTS`).
+
+- **Decrypt on another machine** (restore `confidential/` from the repo):
+  ```bash
+  export SOPS_AGE_KEY_FILE=path/to/your/age/keys.txt   # or use confidential/.config/sops/age/keys.txt after first decrypt
+  make decrypt-confidential
+  ./install-confidential.sh
+  ```
+
+- **Deploy from repo to this machine** (after `confidential/` exists, e.g. after decrypt):
   ```bash
   ./install-confidential.sh
   ```
