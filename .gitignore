@@ -1,0 +1,7 @@
+# Confidential files (contain secrets; use copy-confidential-from-machine.sh locally only)
+confidential/
+
+# OS / editor
+.DS_Store
+*.swp
+*~

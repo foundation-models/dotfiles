@@ -1,0 +1,8 @@
+GOOSE_TELEMETRY_ENABLED: false
+AZURE_OPENAI_ENDPOINT: https://compute-team-poc-us2-resource.cognitiveservices.azure.com
+AZURE_OPENAI_DEPLOYMENT_NAME: gpt-5.2
+AZURE_OPENAI_API_VERSION: 2025-01-01-preview
+OPENAI_HOST: http://localhost:1234/v1
+OPENAI_BASE_PATH: v1/chat/completions
+GOOSE_PROVIDER: custom_lm-studio
+GOOSE_MODEL: glm-4.7-flash-mlx
