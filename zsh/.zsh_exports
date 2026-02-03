@@ -1,0 +1,30 @@
+# Shell exports (inspired by mathiasbynens/dotfiles)
+# Sourced from .zshrc after PATH is set.
+
+# Default editor
+export EDITOR="${EDITOR:-vim}"
+
+# Prefer US English and UTF-8
+export LANG="${LANG:-en_US.UTF-8}"
+export LC_ALL="${LC_ALL:-en_US.UTF-8}"
+
+# History: larger size, omit dups and lines starting with space
+export HISTSIZE=32768
+export SAVEHIST=$HISTSIZE
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_SAVE_NO_DUPS
+
+# Node REPL history (if you use `node` interactively)
+export NODE_REPL_HISTORY="${HOME}/.node_history"
+export NODE_REPL_HISTORY_SIZE=32768
+export NODE_REPL_MODE=sloppy
+
+# Python: UTF-8 for stdin/stdout/stderr
+export PYTHONIOENCODING="${PYTHONIOENCODING:-UTF-8}"
+
+# GPG when installed via Homebrew (needs TTY)
+command -v tty >/dev/null 2>&1 && export GPG_TTY=$(tty)
+
+# Don’t clear the screen after quitting a man page
+export MANPAGER='less -X'

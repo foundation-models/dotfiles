@@ -1,0 +1,26 @@
+# Small shell functions (inspired by mathiasbynens/dotfiles)
+# Sourced from .zshrc.
+
+# Create a directory and cd into it
+mkd() { mkdir -p "$@" && cd "${@: -1}"; }
+
+# Disk usage: current dir or given paths
+fs() {
+  if [[ -n "$*" ]]; then
+    du -sh "$@"
+  else
+    du -sh .[^.]* ./* 2>/dev/null
+  fi
+}
+
+# reload is an alias in .zsh_aliases (don't define a function — zsh errors if both exist)
+
+# --- macOS-only ---
+if [[ "$(uname)" == Darwin ]]; then
+  # cd to the frontmost Finder window’s path
+  cdf() {
+    local p
+    p=$(osascript -e 'tell app "Finder" to POSIX path of (insertion location as alias)' 2>/dev/null)
+    [[ -n "$p" ]] && cd "$p"
+  }
+fi

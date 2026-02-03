@@ -1,0 +1,38 @@
+# Readline config (used by Bash and by Zsh in some line-edit modes)
+# From mathiasbynens/dotfiles — better completion and history search.
+
+# Case-insensitive completion
+set completion-ignore-case on
+
+# List all matches when ambiguous
+set show-all-if-ambiguous on
+
+# Trailing slash when completing symlinks to directories
+set mark-symlinked-directories on
+
+# Up/Down: search history by prefix already typed
+"\e[B": history-search-forward
+"\e[A": history-search-backward
+
+# Don’t complete hidden files unless pattern starts with .
+set match-hidden-files off
+
+# Show all completions at once (no paging)
+set page-completions off
+
+# If more than 200 completions, ask before showing
+set completion-query-items 200
+
+# Show file type markers when completing (like ls -F)
+set visible-stats on
+
+# Skip completed text when completing (readline)
+set skip-completed-text on
+
+# UTF-8
+set input-meta on
+set output-meta on
+set convert-meta off
+
+# Alt+Delete: kill preceding word
+"\e[3;3~": kill-word

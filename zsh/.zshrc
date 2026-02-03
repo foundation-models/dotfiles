@@ -1,22 +1,35 @@
-# Enable interactive comments (allows # for comments in interactive shell)
+# Main zsh config. Modular bits: .zsh_exports, .zsh_aliases, .zsh_functions.
+# Private overrides: ~/.zsh_extra (create locally, never commit).
+
 setopt INTERACTIVE_COMMENTS
 
+# PATH: ~/.path is sourced first if it exists (mathiasbynens pattern)
+[[ -r ~/.path && -f ~/.path ]] && source ~/.path
+
+# NVM
 export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+[[ -s "$NVM_DIR/nvm.sh" ]] && \. "$NVM_DIR/nvm.sh"
+[[ -s "$NVM_DIR/bash_completion" ]] && \. "$NVM_DIR/bash_completion"
 
-. "$HOME/.local/bin/env"
+# Local env (tokens, extra PATH)
+[[ -r "$HOME/.local/bin/env" && -f "$HOME/.local/bin/env" ]] && . "$HOME/.local/bin/env"
 
-# Added by LM Studio CLI (lms)
-export PATH="$PATH:$HOME/.lmstudio/bin"
-# End of LM Studio CLI section
+# LM Studio CLI
+export PATH="${PATH:+$PATH:}$HOME/.lmstudio/bin"
 
+# PATH
 export PATH="$HOME/bin:$PATH"
-export PATH="$HOME/Library/Python/3.9/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="${PATH:+$PATH:}$HOME/Library/Python/3.9/bin"
+export PATH="${PATH:+$PATH:}$HOME/.local/bin"
 
-# Custom prompt (removes username@hostname)
+# Modular config (exports, aliases, functions)
+for f in ~/.zsh_exports ~/.zsh_aliases ~/.zsh_functions; do
+  [[ -r "$f" && -f "$f" ]] && source "$f"
+done
+unset f
+
+# Private overrides (git user, tokens, machine-specific) — do not commit
+[[ -r ~/.zsh_extra && -f ~/.zsh_extra ]] && source ~/.zsh_extra
+
+# Prompt (simple: cwd and %#)
 PS1='%1~ %# '
-
-# Aliases
-alias l='ls -lrtFa'

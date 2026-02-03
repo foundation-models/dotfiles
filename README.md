@@ -4,7 +4,7 @@ Personal dotfiles for macOS and Ubuntu, managed with [GNU Stow](https://www.gnu.
 
 ## Layout
 
-- **`zsh/`** — `.zshrc`, `.zprofile` (shell config)
+- **`zsh/`** — `.zshrc`, `.zprofile`, `.zsh_exports`, `.zsh_aliases`, `.zsh_functions`, `.inputrc` (modular shell config; private overrides in `~/.zsh_extra`, never committed)
 - **`git/`** — `.gitconfig`
 - **`config/`** — `~/.config` contents: `fish/`, `goose/`, `espanso/`
 - **`confidential/`** — credentials, `.boto`, `.azure`, `.gsutil`, `~/.config/*-credentials.toml`, `sops/age` (populated by `copy-confidential-from-machine.sh`)
@@ -72,4 +72,5 @@ Personal dotfiles for macOS and Ubuntu, managed with [GNU Stow](https://www.gnu.
 
 - **`.zprofile`** in `zsh/` is macOS-specific (Homebrew). On Linux you may want a different or empty `.zprofile`.
 - Paths in `.zshrc` use `$HOME` so they work on both macOS and Linux.
+- **Zsh:** `.zshrc` sources `.zsh_exports`, `.zsh_aliases`, `.zsh_functions`; create **`~/.zsh_extra`** for private overrides (git user/email, tokens, custom aliases) — it is sourced last and should never be committed. See `docs/insights-mathiasbynens.md` for the pattern (from mathiasbynens/dotfiles).
 - **Espanso:** On macOS, `config/espanso` is stowed to `~/Library/Application Support/espanso` by `mac/install.sh`. On Linux, it lives under `~/.config/espanso` via `./install.sh config`.

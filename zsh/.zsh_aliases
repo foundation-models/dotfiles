@@ -1,0 +1,61 @@
+# Aliases (inspired by mathiasbynens/dotfiles)
+# Sourced from .zshrc. Keep machine-specific ones in ~/.zsh_extra.
+
+# --- Navigation ---
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias -- -='cd -'
+
+# --- Listings (colorized) ---
+# Zsh: use LS_COLORS (GNU) or LSCOLORS (macOS)
+if ls --color /dev/null 2>/dev/null; then
+  export LS_COLORS='no=00:fi=00:di=01;34:ln=01;36:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:ex=01;32:*.tar=01;31:*.tgz=01;31:*.zip=01;31:*.gz=01;31:*.bz2=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.jpg=01;35:*.jpeg=01;35:*.gif=01;35:*.png=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.avi=01;35:*.mp3=01;35:*.wav=01;35'
+  alias ls='ls --color=auto'
+else
+  export LSCOLORS='BxBxhxDxfxhxhxhxhxcxcx'
+  alias ls='ls -G'
+fi
+alias l='ls -lF'
+alias la='ls -lAF'
+alias lsd='ls -lF | grep "^d"'
+
+# --- Grep ---
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# --- Sudo: allow aliases to expand ---
+alias sudo='sudo '
+
+# --- Shortcuts (override in ~/.zsh_extra for your paths) ---
+alias g='git'
+# alias p='cd ~/projects'
+# alias dl='cd ~/Downloads'
+# alias dt='cd ~/Desktop'
+
+# --- Reload shell ---
+alias reload='exec "${SHELL}" -l'
+
+# --- PATH: one entry per line ---
+alias path='print -l ${(s.:.)PATH}'
+
+# --- Week number ---
+alias week='date +%V'
+
+# --- macOS-only (no-op or harmless on Linux) ---
+if [[ "$(uname)" == Darwin ]]; then
+  # Flush DNS cache
+  alias flush='dscacheutil -flushcache && killall -HUP mDNSResponder'
+  # Remove .DS_Store under current dir
+  alias cleanup='find . -type f -name ".DS_Store" -delete'
+  # Trim newlines and copy to clipboard
+  alias c='tr -d "\n" | pbcopy'
+  # IP addresses
+  alias localip='ipconfig getifaddr en0 2>/dev/null || true'
+fi
+
+# --- Fallbacks when GNU utils not present (e.g. macOS) ---
+command -v md5sum >/dev/null 2>&1 || alias md5sum='md5 -r'
+command -v sha1sum >/dev/null 2>&1 || alias sha1sum='shasum'

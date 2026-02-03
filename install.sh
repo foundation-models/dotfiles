@@ -16,10 +16,31 @@ if ! command -v stow &>/dev/null; then
   exit 1
 fi
 
+# If existing dotfiles would block Stow (real files, not symlinks), back them up and remove.
+unstow_conflicts() {
+  local target="${1:-$HOME}"
+  local pkg="$2"
+  local files
+  case "$pkg" in
+    zsh)  files=".zshrc .zprofile" ;;
+    git)  files=".gitconfig" ;;
+    *)    return 0 ;;
+  esac
+  for f in $files; do
+    local path="$target/$f"
+    if [[ -e "$path" && ! -L "$path" ]]; then
+      echo "Backing up existing $path to ${path}.bak"
+      cp "$path" "${path}.bak"
+      rm -f "$path"
+    fi
+  done
+}
+
 install_package() {
   local pkg="$1"
   local target="${2:-$HOME}"
   if [[ -d "$pkg" ]]; then
+    unstow_conflicts "$target" "$pkg"
     stow --target="$target" --restow "$pkg" 2>/dev/null || stow --target="$target" "$pkg"
     echo "Installed: $pkg -> $target"
   fi
