@@ -1,0 +1,603 @@
+# Repo catalog — searchable index for Cursor / scripts. No tokens.
+# Clone URLs: build on the fly using GITHUB_TOKEN, HF_TOKEN, AZURE_DEVOPS_TOKEN (see token-reference.md).
+# Source: migrated from legacy github-notes; add description/tags as needed or sync from GitHub/GitLab API.
+
+repos:
+  # --- GitHub: DeepSpringAI ---
+  - provider: github
+    owner: DeepSpringAI
+    name: PI_HR
+    description: ""
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: PI_intake
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: assembler-agent
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: state
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: optiplan-agent
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: websites
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: openai-agents
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: openai-chatkit-starter-app
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: claude-code-proxy
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: ai-realestate-automation-platform
+    description: ""
+    tags: [realestate, automation]
+  - provider: github
+    owner: DeepSpringAI
+    name: business-model
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: chromatography
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: ExecOS
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: RL-finetuning
+    tags: [ml, finetuning]
+  - provider: github
+    owner: DeepSpringAI
+    name: PI_episode_alert
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: sonicwall-agent
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: visual-workflow-ai-agent
+    tags: [workflow, ai]
+  - provider: github
+    owner: DeepSpringAI
+    name: erpnext-ai-assistant
+    tags: [erpnext, ai]
+  - provider: github
+    owner: DeepSpringAI
+    name: salesforce-ai-assistant
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: cable-manufacturing-ai
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: PI_coding
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: md-publisher
+    description: ""
+    tags: [markdown, publish]
+  - provider: github
+    owner: DeepSpringAI
+    name: document-intelligence
+    tags: [document, ai]
+  - provider: github
+    owner: DeepSpringAI
+    name: doc-intelligence
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: PI_EHR
+    tags: [ehr, healthcare]
+  - provider: github
+    owner: DeepSpringAI
+    name: HealthLink
+    tags: [healthcare]
+  - provider: github
+    owner: DeepSpringAI
+    name: sap-agent
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: erpnext-mcp-server
+    tags: [erpnext, mcp]
+  - provider: github
+    owner: DeepSpringAI
+    name: demo
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: deepgad-contrast-wise
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: PI_insurance_verification
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: PI_daily_scheduling
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: PI_monthly_scheduling
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: logic-from-traces
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: structured-finance-agent
+    tags: [finance]
+  - provider: github
+    owner: DeepSpringAI
+    name: llm-api-proxy
+    tags: [llm, proxy]
+  - provider: github
+    owner: DeepSpringAI
+    name: deepspring-atlas
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: finetuning
+    tags: [ml, finetuning]
+  - provider: github
+    owner: DeepSpringAI
+    name: clawdbot
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: golden-batch-sentinel
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: pi-demo
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: predictive-maintenace-demo
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: gpt-resources
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: Deployments
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: guideline2actions
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: prompts
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: sourcing-pipeline
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: ehr
+    tags: [ehr, healthcare]
+  - provider: github
+    owner: DeepSpringAI
+    name: PharmaAI
+    tags: [pharma, ai]
+  - provider: github
+    owner: DeepSpringAI
+    name: gdoc-fed-identity-auth0
+    tags: [auth0, gdoc]
+  - provider: github
+    owner: DeepSpringAI
+    name: ContainerPricePredictor
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
+    name: workflow-crafter
+    tags: [workflow]
+
+  # --- GitHub: foundation-models ---
+  - provider: github
+    owner: foundation-models
+    name: domain_adapt_llm
+    tags: [llm, ml]
+  - provider: github
+    owner: foundation-models
+    name: document-ai
+    tags: [document, ai]
+  - provider: github
+    owner: foundation-models
+    name: interview
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: dotfiles
+    description: Personal dotfiles (zsh, git, config, confidential encrypted).
+    tags: [dotfiles, config]
+  - provider: github
+    owner: foundation-models
+    name: MediNoteAI
+    tags: [healthcare, ai]
+  - provider: github
+    owner: foundation-models
+    name: personal
+    tags: [personal]
+  - provider: github
+    owner: foundation-models
+    name: intapp
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: ubuntu-configs
+    description: Ubuntu / Linux configs and notes.
+    tags: [config, ubuntu]
+  - provider: github
+    owner: foundation-models
+    name: deepmeds
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: codex
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: LLM-LNS
+    tags: [llm]
+  - provider: github
+    owner: foundation-models
+    name: deepspring-accounting
+    tags: [accounting]
+  - provider: github
+    owner: foundation-models
+    name: vllm
+    tags: [llm, inference]
+  - provider: github
+    owner: foundation-models
+    name: accounting
+    tags: [accounting]
+  - provider: github
+    owner: foundation-models
+    name: erpnext
+    tags: [erpnext]
+  - provider: github
+    owner: foundation-models
+    name: isights
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: isights-daycare
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: mock-services
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: pi-deployment
+    tags: [deployment]
+  - provider: github
+    owner: foundation-models
+    name: ask-app
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: childcare_vision
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: kubeflow
+    tags: [ml, k8s]
+  - provider: github
+    owner: foundation-models
+    name: kg_nlp
+    tags: [nlp, kg]
+  - provider: github
+    owner: foundation-models
+    name: pod-images
+    tags: [docker, k8s]
+  - provider: github
+    owner: foundation-models
+    name: gpt_rc
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: utility
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: google-drive-service
+    tags: [gdrive]
+  - provider: github
+    owner: foundation-models
+    name: x-ray
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: video-extractor
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: image-deduper
+    tags: [image]
+  - provider: github
+    owner: foundation-models
+    name: sharp-image-detector
+    tags: [image]
+  - provider: github
+    owner: foundation-models
+    name: smilesymbol
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: email-mining-proxy
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: staticfiles
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: data
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: argo
+    tags: [k8s, workflow]
+  - provider: github
+    owner: foundation-models
+    name: home
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: media
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: dockerfiles
+    tags: [docker]
+  - provider: github
+    owner: foundation-models
+    name: ai-search-helper
+    tags: [search, ai]
+  - provider: github
+    owner: foundation-models
+    name: text-generation-webui
+    tags: [llm, ui]
+  - provider: github
+    owner: foundation-models
+    name: helm
+    tags: [k8s, helm]
+  - provider: github
+    owner: foundation-models
+    name: voice-detector
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: jars
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: legal-expert
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: email-mining
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: wabbit
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: image-classifier
+    tags: [image, ml]
+  - provider: github
+    owner: foundation-models
+    name: ai-service-template
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: speech-recognition
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: nginx
+    tags: [infra]
+  - provider: github
+    owner: foundation-models
+    name: smilesymbol-site
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: ai-developer
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: relationship-graph
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: blazingsql
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: voice
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: models
+    tags: [ml]
+  - provider: github
+    owner: foundation-models
+    name: rubrix
+    tags: [nlp]
+  - provider: github
+    owner: foundation-models
+    name: ner
+    tags: [nlp]
+  - provider: github
+    owner: foundation-models
+    name: generative
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: image2text
+    tags: [image, nlp]
+  - provider: github
+    owner: foundation-models
+    name: rag
+    tags: [rag, ai]
+  - provider: github
+    owner: foundation-models
+    name: ai-assistant
+    tags: [ai]
+  - provider: github
+    owner: foundation-models
+    name: relationships
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: mlflow
+    tags: [ml]
+  - provider: github
+    owner: foundation-models
+    name: ganbert
+    tags: [ml]
+  - provider: github
+    owner: foundation-models
+    name: text-classification
+    tags: [nlp]
+  - provider: github
+    owner: foundation-models
+    name: qa
+    tags: []
+  - provider: github
+    owner: foundation-models
+    name: datasets
+    tags: [data]
+  - provider: github
+    owner: foundation-models
+    name: aicluster
+    tags: []
+
+  # --- GitHub: SmileSymbol ---
+  - provider: github
+    owner: SmileSymbol
+    name: streamlit-pipelin
+    tags: []
+
+  # --- Hugging Face ---
+  - provider: huggingface
+    owner: black-forest-labs
+    name: FLUX.1-dev
+    tags: [model]
+  - provider: huggingface
+    owner: foundation-models
+    name: IMIC-medical-report
+    tags: []
+  - provider: huggingface
+    owner: foundation-models
+    name: libs
+    namespace: datasets
+    tags: []
+  - provider: huggingface
+    owner: foundation-models
+    name: dummy-detecton
+    namespace: datasets
+    tags: []
+  - provider: huggingface
+    owner: Alibaba-NLP
+    name: gte-Qwen1.5-7B-instruct
+    tags: [model, embedding]
+  - provider: huggingface
+    owner: meta-llama
+    name: Meta-Llama-3.1-8B-Instruct
+    tags: [model]
+  - provider: huggingface
+    owner: benjamin-paine
+    name: stable-diffusion-v1-5
+    tags: [model]
+  - provider: huggingface
+    owner: nvidia
+    name: NV-Embed-v1i
+    tags: [model, embedding]
+  - provider: huggingface
+    owner: google
+    name: gemma-7b-it
+    tags: [model]
+  - provider: huggingface
+    owner: google
+    name: gemma-2b-it
+    tags: [model]
+
+  # --- Azure DevOps (intappdevops) ---
+  - provider: azure_devops
+    org: intappdevops
+    project: AI
+    name: ai-models-helm
+    tags: [helm, k8s]
+  - provider: azure_devops
+    org: intappdevops
+    project: DealCloud
+    name: deal_sourcing
+    tags: []
+  - provider: azure_devops
+    org: intappdevops
+    project: DealCloud
+    name: ask-dealcloud
+    tags: []
+  - provider: azure_devops
+    org: intappdevops
+    project: AI
+    name: query2sql2api
+    tags: []
+  - provider: azure_devops
+    org: intappdevops
+    project: AI
+    name: ai-argo-applications
+    tags: [argo]
+  - provider: azure_devops
+    org: intappdevops
+    project: AI
+    name: env-settings
+    tags: []
+  - provider: azure_devops
+    org: intappdevops
+    project: AI
+    name: ai-helm-charts
+    tags: [helm]
+  - provider: azure_devops
+    org: intappdevops
+    project: Walls
+    name: misfile
+    tags: []
+  - provider: azure_devops
+    org: intappdevops
+    project: Walls
+    name: misfile-sharepoint
+    tags: []
+
+# Clone URL templates (use token from env; see token-reference.md):
+#   GitHub:    https://github.com/{owner}/{name}.git     -> GITHUB_TOKEN
+#   HuggingFace: https://huggingface.co/{namespace or owner}/{name} -> HF_TOKEN
+#   Azure DevOps: https://dev.azure.com/{org}/{project}/_git/{name} -> AZURE_DEVOPS_TOKEN
