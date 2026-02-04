@@ -43,6 +43,10 @@ repos:
     tags: []
   - provider: github
     owner: DeepSpringAI
+    name: tunneling
+    tags: []
+  - provider: github
+    owner: DeepSpringAI
     name: ai-realestate-automation-platform
     description: ""
     tags: [realestate, automation]

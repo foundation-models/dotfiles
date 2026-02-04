@@ -1,4 +1,5 @@
 # espanso match file
+# SOURCE OF TRUTH — do not overwrite from backup/restore. To edit: chmod u+w base.yml
 
 # For a complete introduction, visit the official docs at: https://espanso.org/docs/
 
@@ -20,6 +21,12 @@ matches:
 
   - trigger: ":summ"
     replace: "Summarize this entire conversation as a structured brief preserving key decisions, assumptions, and open questions."
+
+  - trigger: ":done"
+    replace: "update progress.md, commit and push"
+
+  - trigger: ":linkit"
+    replace: "make it source of truth and replace the original one with a symbolic link to this file"
 
   # NOTE: espanso uses YAML to define matches, so pay attention to the indentation!
 

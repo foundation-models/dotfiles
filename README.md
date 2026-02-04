@@ -6,8 +6,9 @@ Personal dotfiles for macOS and Ubuntu, managed with [GNU Stow](https://www.gnu.
 
 - **`zsh/`** — `.zshrc`, `.zprofile`, `.zsh_exports`, `.zsh_aliases`, `.zsh_functions`, `.inputrc` (modular shell config; private overrides in `~/.zsh_extra`, never committed)
 - **`git/`** — `.gitconfig`
-- **`config/`** — `~/.config` contents: `fish/`, `goose/`, `espanso/`
-- **`confidential/`** — credentials, `.boto`, `.azure`, `.gsutil`, `~/.config/*-credentials.toml`, `sops/age` (populated by `copy-confidential-from-machine.sh`)
+- **`config/`** — `~/.config` contents: `fish/`, `goose/`, `espanso/`; `personal-tokens.env.example` is a placeholder for GitHub + dev.azure.com/intappdevops (copy to `~/.config/personal-tokens.env`, fill tokens only; owner/org from path = username in URL; use `./scripts/authenticated-git-url.sh <path>` to build URLs)
+- **`scripts/authenticated-git-url.sh`** — Builds `https://owner:TOKEN@...` using owner/org parsed from the path (no separate username env)
+- **`confidential/`** — credentials, `.boto`, `.azure`, `.gsutil`, `~/.config/*-credentials.toml`, `personal-tokens.env`, `sops/age` (populated by `copy-confidential-from-machine.sh`)
 - **`mac/`** — macOS-only install (Homebrew, espanso → `~/Library/Application Support/espanso`)
 - **`linux/`** — Ubuntu/Linux install (apt, stow)
 - **`install.sh`** — Main installer: stows zsh, git, config; runs OS-specific scripts (does **not** install confidential)
@@ -24,7 +25,7 @@ Personal dotfiles for macOS and Ubuntu, managed with [GNU Stow](https://www.gnu.
    ```bash
    ./install.sh
    ```
-   This stows `zsh`, `git`, and `config` into your home (and `config` into `~/.config`), then runs `mac/install.sh` or `linux/install.sh`. On macOS, espanso is also stowed to `~/Library/Application Support/espanso`.
+   This stows `zsh`, `git`, and `config` into your home (and `config` into `~/.config`), then runs `mac/install.sh` or `linux/install.sh`. On macOS, espanso `match/base.yml` is symlinked from dotfiles (source of truth) to `~/Library/Application Support/espanso/match/base.yml`.
 
 4. **(Optional)** To deploy confidential files (credentials, .boto, .azure, .gsutil) on this machine:
    ```bash
@@ -73,4 +74,4 @@ Personal dotfiles for macOS and Ubuntu, managed with [GNU Stow](https://www.gnu.
 - **`.zprofile`** in `zsh/` is macOS-specific (Homebrew). On Linux you may want a different or empty `.zprofile`.
 - Paths in `.zshrc` use `$HOME` so they work on both macOS and Linux.
 - **Zsh:** `.zshrc` sources `.zsh_exports`, `.zsh_aliases`, `.zsh_functions`; create **`~/.zsh_extra`** for private overrides (git user/email, tokens, custom aliases) — it is sourced last and should never be committed. See `docs/insights-mathiasbynens.md` for the pattern (from mathiasbynens/dotfiles).
-- **Espanso:** On macOS, `config/espanso` is stowed to `~/Library/Application Support/espanso` by `mac/install.sh`. On Linux, it lives under `~/.config/espanso` via `./install.sh config`.
+- **Espanso:** On macOS, `config/espanso/match/base.yml` is the source of truth; `mac/install.sh` symlinks it to `~/Library/Application Support/espanso/match/base.yml`. On Linux, it lives under `~/.config/espanso` via `./install.sh config`.

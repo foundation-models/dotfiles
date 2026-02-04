@@ -24,6 +24,14 @@ done
 [[ -f "$H/.gsutil/credstore2" ]] && cp "$H/.gsutil/credstore2" "$CONF/.gsutil/credstore2" 2>/dev/null && echo "Copied .gsutil/credstore2" || true
 [[ -f "$H/.gsutil/credstore2.lock" ]] && cp "$H/.gsutil/credstore2.lock" "$CONF/.gsutil/credstore2.lock" 2>/dev/null && echo "Copied .gsutil/credstore2.lock" || true
 
+# Personal tokens for GitHub + dev.azure.com/intappdevops (see config/personal-tokens.env.example)
+# Prefer $HOME/.config; fallback to workspace/.config when dotfiles lives under workspace (e.g. workspace/dotfiles)
+if [[ -f "$H/.config/personal-tokens.env" ]]; then
+  cp "$H/.config/personal-tokens.env" "$CONF/.config/personal-tokens.env" && echo "Copied .config/personal-tokens.env"
+elif [[ -f "$DOTFILES_DIR/../.config/personal-tokens.env" ]]; then
+  cp "$DOTFILES_DIR/../.config/personal-tokens.env" "$CONF/.config/personal-tokens.env" && echo "Copied .config/personal-tokens.env (from workspace)"
+fi
+
 # Credentials and secret config under .config
 for f in \
   Azure-credentials.toml gdrive-credentials.toml RealEstate-credentials.toml \

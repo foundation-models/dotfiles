@@ -17,6 +17,7 @@ if ! command -v stow &>/dev/null; then
 fi
 
 # If existing dotfiles would block Stow (real files, not symlinks), back them up and remove.
+# Do not add backup/restore that overwrites source-of-truth paths (e.g. config/espanso/match/base.yml).
 unstow_conflicts() {
   local target="${1:-$HOME}"
   local pkg="$2"
