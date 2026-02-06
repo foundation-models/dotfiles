@@ -32,3 +32,4 @@
 ## Changelog
 
 - **2025-02-06:** Added Artifactory Docker credentials to `config/personal-tokens.env.example` (ARTIFACTORY_DOCKER_USER, ARTIFACTORY_DOCKER_TOKEN). Updated `~/.config/personal-tokens.env` and re-ran `copy-confidential-from-machine.sh` + `make encrypt-confidential` so `confidential.tar.enc` includes Artifactory tokens for solver-sandbox `make docker-push`.
+- **2025-02-06:** Progress doc refreshed; Cursor rules (workspace + `cursor/` template) and docs (`docs/aks-intapp.md`, `docs/AKS Node Pool.json`) in repo.
