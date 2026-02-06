@@ -25,5 +25,10 @@
 | Personal tokens placeholder + script | Done |
 | Clone with auth (Makefile)   | Done     |
 | update-encrypted-confidential | Done |
+| Artifactory Docker in personal-tokens.env | Done |
 
-*Last updated: 2025-02-03*
+*Last updated: 2025-02-06*
+
+## Changelog
+
+- **2025-02-06:** Added Artifactory Docker credentials to `config/personal-tokens.env.example` (ARTIFACTORY_DOCKER_USER, ARTIFACTORY_DOCKER_TOKEN). Updated `~/.config/personal-tokens.env` and re-ran `copy-confidential-from-machine.sh` + `make encrypt-confidential` so `confidential.tar.enc` includes Artifactory tokens for solver-sandbox `make docker-push`.
