@@ -27,10 +27,12 @@
 | update-encrypted-confidential | Done |
 | Artifactory Docker in personal-tokens.env | Done |
 
-*Last updated: 2025-02-08*
+*Last updated: 2025-02-11*
 
 ## Changelog
 
+- **2025-02-11:** Copy script now includes every `~/.config/**/*.toml` (discovered via `find`) so all TOML config has a SOPS-encrypted copy in `confidential.tar.enc`. Removed hardcoded TOML list; README and progress updated.
+- **2025-02-10:** Added `docs/HOSSEIN_MACBOOK_SPEC.md` — M3 Max, 36 GB, macOS Tahoe 26.2; strengths (local AI/MLX/MPS, full-stack, RAG) and limits (no CUDA, full pretraining → cloud).
 - **2025-02-08:** Progress doc updated (changelog entry); committed and pushed.
 - **2025-02-06:** Added Artifactory Docker credentials to `config/personal-tokens.env.example` (ARTIFACTORY_DOCKER_USER, ARTIFACTORY_DOCKER_TOKEN). Updated `~/.config/personal-tokens.env` and re-ran `copy-confidential-from-machine.sh` + `make encrypt-confidential` so `confidential.tar.enc` includes Artifactory tokens for solver-sandbox `make docker-push`.
 - **2025-02-06:** Progress doc refreshed; Cursor rules (workspace + `cursor/` template) and docs (`docs/aks-intapp.md`, `docs/AKS Node Pool.json`) in repo.

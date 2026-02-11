@@ -9,7 +9,6 @@ CONF="$DOTFILES_DIR/confidential"
 H="${HOME:-$HOME}"
 
 mkdir -p "$CONF/.azure" "$CONF/.gsutil" "$CONF/.config"
-mkdir -p "$CONF/.config/visual-workflow-ai-agent" "$CONF/.config/golden-batch-sentinel" "$CONF/.config/md-publisher"
 mkdir -p "$CONF/.config/sops/age"
 
 # Home dotfiles
@@ -32,20 +31,13 @@ elif [[ -f "$DOTFILES_DIR/../.config/personal-tokens.env" ]]; then
   cp "$DOTFILES_DIR/../.config/personal-tokens.env" "$CONF/.config/personal-tokens.env" && echo "Copied .config/personal-tokens.env (from workspace)"
 fi
 
-# Credentials and secret config under .config
-for f in \
-  Azure-credentials.toml gdrive-credentials.toml RealEstate-credentials.toml \
-  LLMProxy-credentials.toml structured-finance-agent-credentials.toml finetuning-credentials.toml \
-  logic-from-traces/config.toml \
-; do
-  if [[ -f "$H/.config/$f" ]]; then
-    mkdir -p "$CONF/.config/$(dirname "$f")"
-    cp "$H/.config/$f" "$CONF/.config/$f" && echo "Copied .config/$f"
-  fi
-done
-[[ -f "$H/.config/visual-workflow-ai-agent/Azure-credentials.toml" ]] && cp "$H/.config/visual-workflow-ai-agent/Azure-credentials.toml" "$CONF/.config/visual-workflow-ai-agent/" && echo "Copied .config/visual-workflow-ai-agent/Azure-credentials.toml"
-[[ -f "$H/.config/golden-batch-sentinel/Azure-credentials.toml" ]] && cp "$H/.config/golden-batch-sentinel/Azure-credentials.toml" "$CONF/.config/golden-batch-sentinel/" && echo "Copied .config/golden-batch-sentinel/Azure-credentials.toml"
-[[ -f "$H/.config/md-publisher/gdrive-credentials.toml" ]] && cp "$H/.config/md-publisher/gdrive-credentials.toml" "$CONF/.config/md-publisher/" && echo "Copied .config/md-publisher/gdrive-credentials.toml"
+# Every .toml under ~/.config (credentials and other secret config) — keep SOPS-encrypted copy in repo
+while IFS= read -r -d '' f; do
+  rel="${f#$H/.config/}"
+  mkdir -p "$CONF/.config/$(dirname "$rel")"
+  cp "$f" "$CONF/.config/$rel" && echo "Copied .config/$rel"
+done < <(find "$H/.config" -name '*.toml' -type f -print0 2>/dev/null)
+
 [[ -f "$H/.config/sops/age/keys.txt" ]] && cp "$H/.config/sops/age/keys.txt" "$CONF/.config/sops/age/" && echo "Copied .config/sops/age/keys.txt"
 
 echo "Done. Confidential files are in $CONF/"
