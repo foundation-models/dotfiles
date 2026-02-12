@@ -1,0 +1,24 @@
+---
+description: Copy default cursor rules from dotfiles into a repo when asked
+alwaysApply: true
+---
+
+# Copy Default Cursor Rules
+
+When the user asks to **copy default cursor rules** (or equivalent: "copy cursor rules", "add default cursor rules", "copy dotfiles cursor rules"), do the following:
+
+1. **Source:** The folder **`dotfiles/cursor/.cursor`** in the workspace (at `workspace/dotfiles/cursor/.cursor`). It contains `rules/` (e.g. config-toml, deploy, docs, makefile, pyproject, python-cli, sops) and `rules.md`.
+
+2. **Destination:** The **root of the repo in context** — typically:
+   - The repo that was **just cloned** in this conversation (e.g. if you just ran `make clone ... DEST=../presenter`, copy to `presenter/`), or
+   - The repo the user names (e.g. "copy default cursor rules to deal_sourcing"), or
+   - The workspace root if it is a single repo.
+
+3. **Action:** Copy the **entire** `dotfiles/cursor/.cursor` directory into the target repo root so that the target repo has `.cursor/` at its root with the same structure (e.g. `.cursor/rules/`, `.cursor/rules.md`). Create `.cursor` at the destination if it does not exist; merge or replace so the default rules are present.
+
+**Command (example, after cloning into `presenter`):**
+```bash
+cp -R dotfiles/cursor/.cursor presenter/
+```
+
+If the target repo already has a `.cursor` directory, copy contents so that `dotfiles/cursor/.cursor/rules/*` and `dotfiles/cursor/.cursor/rules.md` are added (overwriting or merging as appropriate; prefer adding default rules without removing existing repo-specific rules).

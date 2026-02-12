@@ -145,7 +145,7 @@ repos:
     tags: []
   - provider: github
     owner: DeepSpringAI
-    name: logic-from-traces
+    name: biz-decipher
     tags: []
   - provider: github
     owner: DeepSpringAI

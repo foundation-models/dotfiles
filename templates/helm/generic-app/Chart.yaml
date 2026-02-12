@@ -1,0 +1,8 @@
+apiVersion: v2
+name: generic-app
+description: Generic app Helm chart (app + optional Kafka)
+
+type: application
+version: 0.1.0
+appVersion: "0.0.0"
+

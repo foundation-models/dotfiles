@@ -1,0 +1,10 @@
+---
+description: UV, pyproject.toml, optional extras, hatch dev-mode-dirs
+globs: pyproject.toml
+alwaysApply: false
+---
+
+# UV / pyproject
+
+- Use **UV** and **pyproject.toml** (no `requirements.txt`). Optional extras for optional features (e.g. `dev`, `vl`).
+- Hatch/hatchling: `dev-mode-dirs = ["."]` when there is no package dir; list included modules in `only-include` if building a wheel.

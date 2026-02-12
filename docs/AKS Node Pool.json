@@ -1,0 +1,116 @@
+{
+  "subscription": {
+    "id": "11b16e25-0e5f-4e76-87bc-5f2e9adb26df",
+    "name": "Development 1",
+    "region": "eastus"
+  },
+  "aks_cluster": "aks-dev1-bravo-eastus",
+  "currency": "USD",
+  "pricing_model": "pay-as-you-go",
+  "node_vm_sizes": [
+    {
+      "vm_size": "B2as_v2",
+      "family": "B-series",
+      "vcpus": 2,
+      "ram_gb": 8,
+      "cost_per_hour": 0.06
+    },
+    {
+      "vm_size": "B4as_v2",
+      "family": "B-series",
+      "vcpus": 4,
+      "ram_gb": 16,
+      "cost_per_hour": 0.12
+    },
+    {
+      "vm_size": "D2as_v5",
+      "family": "D-series v5",
+      "vcpus": 2,
+      "ram_gb": 8,
+      "cost_per_hour": 0.07
+    },
+    {
+      "vm_size": "D4as_v5",
+      "family": "D-series v5",
+      "vcpus": 4,
+      "ram_gb": 16,
+      "cost_per_hour": 0.14
+    },
+    {
+      "vm_size": "D8as_v5",
+      "family": "D-series v5",
+      "vcpus": 8,
+      "ram_gb": 32,
+      "cost_per_hour": 0.27
+    },
+    {
+      "vm_size": "D2as_v6",
+      "family": "D-series v6",
+      "vcpus": 2,
+      "ram_gb": 8,
+      "cost_per_hour": 0.07
+    },
+    {
+      "vm_size": "D4as_v6",
+      "family": "D-series v6",
+      "vcpus": 4,
+      "ram_gb": 16,
+      "cost_per_hour": 0.14
+    },
+    {
+      "vm_size": "D8as_v6",
+      "family": "D-series v6",
+      "vcpus": 8,
+      "ram_gb": 32,
+      "cost_per_hour": 0.29
+    },
+    {
+      "vm_size": "E4as_v5",
+      "family": "E-series v5",
+      "vcpus": 4,
+      "ram_gb": 32,
+      "cost_per_hour": 0.17
+    },
+    {
+      "vm_size": "E8as_v5",
+      "family": "E-series v5",
+      "vcpus": 8,
+      "ram_gb": 64,
+      "cost_per_hour": 0.36
+    },
+    {
+      "vm_size": "F4s_v2",
+      "family": "F-series",
+      "vcpus": 4,
+      "ram_gb": 8,
+      "cost_per_hour": 0.13
+    },
+    {
+      "vm_size": "F8s_v2",
+      "family": "F-series",
+      "vcpus": 8,
+      "ram_gb": 16,
+      "cost_per_hour": 0.27
+    },
+    {
+      "vm_size": "NC6s_v3",
+      "family": "GPU",
+      "vcpus": 6,
+      "ram_gb": 112,
+      "cost_per_hour": 2.42
+    },
+    {
+      "vm_size": "NV8as_v4",
+      "family": "GPU",
+      "vcpus": 8,
+      "ram_gb": 28,
+      "cost_per_hour": 0.37
+    }
+  ],
+  "notes": [
+    "All VM sizes listed are AKS-schedulable",
+    "Costs are hourly estimates from Azure portal (East US)",
+    "Final availability depends on quota and availability zone",
+    "GPU nodes require NVIDIA device plugin in AKS"
+  ]
+}

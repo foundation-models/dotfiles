@@ -1,0 +1,129 @@
+{{- if and .Values.kafka.enabled (not .Values.kafka.sidecar) }}
+{{- $fullName := include "generic-app.fullname" . }}
+{{- $headless := printf "%s-kafka-headless" $fullName }}
+{{- $replicas := int .Values.kafka.replicaCount }}
+{{- $kafkaSvc := printf "%s-kafka" $fullName }}
+{{- $namespace := .Release.Namespace }}
+{{- $clusterDomain := "svc.cluster.local" }}
+{{- $quorumList := list }}
+{{- range $i := until $replicas }}
+{{- $nodeID := add $i 1 }}
+{{- $podFqdn := printf "%s-kafka-%d.%s.%s.%s" $fullName $i $headless $namespace $clusterDomain }}
+{{- $podAddr := printf "%s:29093" $podFqdn }}
+{{- $quorumList = append $quorumList (printf "%d@%s" $nodeID $podAddr) }}
+{{- end }}
+{{- $quorumVoters := join "," $quorumList }}
+{{- $singleBroker := eq $replicas 1 }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ $fullName }}-kafka
+  labels:
+    {{- include "generic-app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: kafka
+spec:
+  serviceName: {{ $headless }}
+  replicas: {{ $replicas }}
+  {{- if gt $replicas 1 }}
+  podManagementPolicy: Parallel
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "generic-app.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: kafka
+  template:
+    metadata:
+      labels:
+        {{- include "generic-app.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/component: kafka
+    spec:
+      {{- if not $singleBroker }}
+      subdomain: {{ $headless }}
+      {{- end }}
+      containers:
+        - name: kafka
+          image: {{ .Values.kafka.image }}
+          ports:
+            - containerPort: {{ .Values.kafka.servicePort | default 9092 }}
+              name: kafka
+            - containerPort: 29092
+              name: plaintext
+            - containerPort: 29093
+              name: controller
+          {{- if $singleBroker }}
+          env:
+            - name: KAFKA_NODE_ID
+              value: "1"
+            - name: KAFKA_CONTROLLER_QUORUM_VOTERS
+              value: "1@localhost:29093"
+            - name: KAFKA_ADVERTISED_LISTENERS
+              value: {{ printf "PLAINTEXT://%s:29092,PLAINTEXT_HOST://%s:%d" $kafkaSvc $kafkaSvc (int (.Values.kafka.servicePort | default 9092)) | quote }}
+            - name: KAFKA_LISTENERS
+              value: {{ printf "PLAINTEXT://0.0.0.0:29092,CONTROLLER://0.0.0.0:29093,PLAINTEXT_HOST://0.0.0.0:%d" (int (.Values.kafka.servicePort | default 9092)) | quote }}
+            - name: KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR
+              value: "1"
+            - name: KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR
+              value: "1"
+            - name: KAFKA_TRANSACTION_STATE_LOG_MIN_ISR
+              value: "1"
+            {{- range $key, $val := .Values.kafka.env }}
+            {{- if and (ne $key "KAFKA_NODE_ID") (ne $key "KAFKA_ADVERTISED_LISTENERS") (ne $key "KAFKA_LISTENERS") (ne $key "KAFKA_CONTROLLER_QUORUM_VOTERS") (ne $key "KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR") (ne $key "KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR") (ne $key "KAFKA_TRANSACTION_STATE_LOG_MIN_ISR") }}
+            - name: {{ $key }}
+              value: {{ $val | quote }}
+            {{- end }}
+            {{- end }}
+          {{- else }}
+          command:
+            - sh
+            - -c
+            - |
+              export KAFKA_NODE_ID=$(echo ${HOSTNAME} | sed 's/.*-//'); KAFKA_NODE_ID=$((KAFKA_NODE_ID+1));
+              KAFKA_FQDN="${HOSTNAME}.${HEADLESS_SVC}.${NAMESPACE}.svc.cluster.local";
+              export KAFKA_ADVERTISED_LISTENERS="PLAINTEXT://${KAFKA_FQDN}:29092,PLAINTEXT_HOST://${KAFKA_FQDN}:{{ .Values.kafka.servicePort | default 9092 }}";
+              exec /etc/confluent/docker/run
+          env:
+            - name: HEADLESS_SVC
+              value: {{ $headless }}
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: KAFKA_CONTROLLER_QUORUM_VOTERS
+              value: {{ $quorumVoters | quote }}
+            - name: KAFKA_LISTENERS
+              value: {{ printf "PLAINTEXT://0.0.0.0:29092,CONTROLLER://0.0.0.0:29093,PLAINTEXT_HOST://0.0.0.0:%d" (int (.Values.kafka.servicePort | default 9092)) | quote }}
+            {{- range $key, $val := .Values.kafka.env }}
+            {{- if and (ne $key "KAFKA_NODE_ID") (ne $key "KAFKA_ADVERTISED_LISTENERS") (ne $key "KAFKA_LISTENERS") (ne $key "KAFKA_CONTROLLER_QUORUM_VOTERS") }}
+            - name: {{ $key }}
+              value: {{ $val | quote }}
+            {{- end }}
+            {{- end }}
+          {{- end }}
+          {{- with .Values.kafka.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          readinessProbe:
+            tcpSocket:
+              port: {{ .Values.kafka.servicePort | default 9092 }}
+            initialDelaySeconds: 15
+            periodSeconds: 5
+          livenessProbe:
+            exec:
+              command: ["kafka-broker-api-versions", "--bootstrap-server", "localhost:{{ .Values.kafka.servicePort | default 9092 }}"]
+            initialDelaySeconds: 20
+            periodSeconds: 10
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+{{- end }}
+

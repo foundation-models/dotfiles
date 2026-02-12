@@ -26,5 +26,13 @@ if [[ -f "$SOURCE_OF_TRUTH_ESPANSO_BASE" ]]; then
   chmod 444 "$SOURCE_OF_TRUTH_ESPANSO_BASE"
   echo "Installed: espanso match/base.yml -> dotfiles (symlink); source-of-truth file is read-only"
 fi
+# Tailscale: private mesh VPN for SSH/remote access without port forwarding (see docs/mac-remote-login-ssh.md)
+if ! brew list --cask tailscale &>/dev/null; then
+  echo "Installing Tailscale (cask)..."
+  brew install --cask tailscale
+  echo "Tailscale installed. Open Tailscale from Applications or menu bar to sign in and connect."
+else
+  echo "Tailscale already installed."
+fi
 # Optional: brew bundle --file=Brewfile
 # brew install stow nvm ...

@@ -1,0 +1,93 @@
+# Generic defaults; override via your environment values files.
+
+replicaCount: 1
+
+# When true, deploy as a StatefulSet (stable pod name) and default command keeps container alive.
+debug: false
+command: []
+
+nameOverride: ""
+fullnameOverride: ""
+
+image:
+  repository: example.com/your-org/your-app
+  pullPolicy: IfNotPresent
+  tag: ""
+
+imagePullSecrets: []
+
+workingDir: ""
+
+podAnnotations: {}
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+labels: {}
+
+# Kyverno-friendly defaults (non-root). Override if your image requires root.
+podSecurityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 100
+
+securityContext:
+  privileged: false
+  runAsNonRoot: true
+  runAsUser: 1000
+  runAsGroup: 100
+
+# If set to a boolean, it will be emitted on the pod spec.
+automountServiceAccountToken: false
+
+service:
+  type: ClusterIP
+  port: 8080
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+  hosts: []
+  tls: []
+
+resources:
+  requests: {}
+  limits: {}
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: null
+
+env: []
+volumeMounts: []
+volumes: []
+
+nodeSelector: {}
+affinity: {}
+tolerations: []
+
+# Optional Kafka (KRaft).
+# - sidecar=true: kafka runs in the same pod (bootstrap 127.0.0.1:9092)
+# - sidecar=false: kafka runs as a separate StatefulSet + Services (bootstrap <release>-generic-app-kafka:9092)
+kafka:
+  enabled: false
+  sidecar: false
+  image: confluentinc/cp-kafka:7.5.0
+  replicaCount: 1
+  servicePort: 9092
+  resources:
+    requests: {}
+    limits: {}
+  env:
+    KAFKA_PROCESS_ROLES: broker,controller
+    KAFKA_LISTENERS: "PLAINTEXT://kafka:29092,CONTROLLER://kafka:29093,PLAINTEXT_HOST://0.0.0.0:9092"
+    KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: "CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT"
+    KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+    KAFKA_CONTROLLER_QUORUM_VOTERS: "1@kafka:29093"
+    CLUSTER_ID: "MkU3OEVBNTcwNTJENDM2Qk"

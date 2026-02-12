@@ -1,0 +1,11 @@
+---
+description: SOPS encrypted config (.sops.yaml, encrypt/decrypt targets, .gitignore)
+globs: .sops.yaml,config/*.enc.toml
+alwaysApply: false
+---
+
+# SOPS and encrypted config
+
+- `.sops.yaml`: `path_regex: config/.*\.enc\.toml$` (or equivalent).
+- Makefile: `encrypt-toml` / `decrypt-toml` targets with `CREDS_SOURCE` (e.g. `~/.config/<project>-credentials.toml`), `CREDS_ENCRYPTED` (e.g. `config/<project>-credentials.enc.toml`), `AGE_KEY_FILE`.
+- `.gitignore`: ignore `config/*.toml`, allow `!config/*.enc.toml`.

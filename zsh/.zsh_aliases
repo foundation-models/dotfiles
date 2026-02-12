@@ -17,7 +17,7 @@ else
   export LSCOLORS='BxBxhxDxfxhxhxhxhxcxcx'
   alias ls='ls -G'
 fi
-alias l='ls -lF'
+alias l='ls -lrtFa'
 alias la='ls -lAF'
 alias lsd='ls -lF | grep "^d"'
 

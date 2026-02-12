@@ -1,0 +1,11 @@
+---
+description: Docs layout (progress.md, UPPER_SNAKE vs lowercase)
+globs: docs/**
+alwaysApply: false
+---
+
+# Docs
+
+- **Placement**: Every `.md` file goes into a relevant folder inside `docs/` (e.g. `docs/design/`, `docs/reports/`); do not put markdown at repo root except `README.md`.
+- **Progress log**: `docs/progress.md` — append-only log of Cursor/agent actions (reference in core rules).
+- **Design/reports**: Use `docs/`; UPPER_SNAKE for major docs (e.g. `FINETUNE_VL.md`, `EVAL_ANALYSIS.md`), lowercase for generated or minor (e.g. `eval_single_comparison.md`, `progress.md`).

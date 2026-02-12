@@ -1,0 +1,11 @@
+---
+description: TOML config format, locations, override order
+globs: config.toml,config/*.toml
+alwaysApply: false
+---
+
+# TOML config
+
+- **Config format**: TOML only. Load with `tomllib` (Python 3.11+) or `import tomli as tomllib` fallback.
+- **Config locations**: Repo-root `config.toml` for non-secret config; `~/.config/<ProjectName>-credentials.toml` for secrets (never commit plaintext).
+- **Override order**: Environment variables first (e.g. `IMAGES_DIR`, `LLM_PROXY_URL`), then TOML (try local `config.toml`, then `~/.config/...-credentials.toml`).

@@ -1,0 +1,14 @@
+---
+description: Python CLI script conventions (shebang, main, argparse)
+globs: src/**/*.py
+alwaysApply: false
+---
+
+# Python CLI scripts
+
+- **Placement**: Every Python file goes into a relevant folder inside `src/` (e.g. `src/scripts/`, `src/services/`); do not put Python modules at repo root.
+- Shebang: `#!/usr/bin/env python3`
+- Module docstring: one-line summary, then "Run: `make <target>`" or "Run: `uv run ...`"; mention `.cursor/rules.md` when relevant (e.g. proxy-first, config from TOML)
+- Entrypoint: `def main() -> int:` (or `-> None` for scripts that don't need exit code); `if __name__ == "__main__": sys.exit(main())`
+- CLI: use `argparse`; prefer flags over positional args for optional behavior
+- Paths in scripts: `_SRC_DIR = os.path.dirname(os.path.abspath(__file__))`, `PROJECT_DIR = os.path.dirname(_SRC_DIR)`; build paths from `PROJECT_DIR` so scripts work from any CWD

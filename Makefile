@@ -15,7 +15,7 @@ DOTFILES_DIR := $(dir $(abspath $(firstword $(MAKEFILE_LIST))))
 SOPS_AGE_RECIPIENTS ?= $(shell grep '^age' $(DOTFILES_DIR).sops-age-recipients 2>/dev/null | head -1 || true)
 CONFIDENTIAL_ENC := confidential.tar.enc
 
-.PHONY: encrypt-confidential decrypt-confidential commit-encrypted-confidential update-encrypted-confidential clone
+.PHONY: encrypt-confidential decrypt-confidential commit-encrypted-confidential update-encrypted-confidential clone install-tailscale
 
 # Encrypt entire confidential/ into confidential.tar.enc (SOPS + age).
 # Requires: confidential/ to exist (run ./copy-confidential-from-machine.sh first).
@@ -63,5 +63,14 @@ update-encrypted-confidential:
 # Run from dotfiles repo root. Clone runs from CWD; use DEST=../ai-helm-charts to clone into parent (e.g. workspace).
 clone:
 	@test -n "$(REPO)" || (echo "Error: Set REPO= (e.g. dev.azure.com/intappdevops/AI/_git/ai-helm-charts or github.com/owner/repo)" && exit 1)
-	@url=$$(HOME="$(PERSONAL_TOKENS_HOME)" $(DOTFILES_DIR)scripts/authenticated-git-url.sh "$(REPO)"); \
+	@[ -n "$(PERSONAL_TOKENS_HOME)" ] && export HOME="$(PERSONAL_TOKENS_HOME)"; \
+	url=$$($(DOTFILES_DIR)scripts/authenticated-git-url.sh "$(REPO)"); \
 	git clone "$$url" "$(or $(DEST),$(notdir $(REPO)))"
+
+# Install Tailscale on macOS (for SSH/remote access without port forwarding; see docs/mac-remote-login-ssh.md).
+# Then open Tailscale app to sign in; remote users can ssh you@$(tailscale ip -4).
+install-tailscale:
+	@command -v brew >/dev/null 2>&1 || (echo "Error: Homebrew required. Run mac/install.sh first." && exit 1)
+	brew install --cask tailscale
+	@echo "Tailscale installed. Open Tailscale from Applications (or menu bar) to sign in and connect."
+	@echo "Your Tailscale IP (after connecting): $$(tailscale ip -4 2>/dev/null || echo 'run after signing in')"

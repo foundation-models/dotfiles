@@ -1,0 +1,28 @@
+{{- if and .Values.kafka.enabled (not .Values.kafka.sidecar) }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "generic-app.fullname" . }}-kafka
+  labels:
+    {{- include "generic-app.labels" . | nindent 4 }}
+    app.kubernetes.io/component: kafka
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.kafka.servicePort | default 9092 }}
+      targetPort: {{ .Values.kafka.servicePort | default 9092 }}
+      protocol: TCP
+      name: kafka
+    - port: 29092
+      targetPort: 29092
+      protocol: TCP
+      name: plaintext
+    - port: 29093
+      targetPort: 29093
+      protocol: TCP
+      name: controller
+  selector:
+    {{- include "generic-app.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: kafka
+{{- end }}
+

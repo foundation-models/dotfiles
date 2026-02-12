@@ -13,7 +13,7 @@ Use these **env var names** (or keys in a confidential config) when building URL
 
 | Purpose | Env var (suggestion) | Used for |
 |---------|----------------------|----------|
-| GitHub | `GITHUB_TOKEN` or `GH_TOKEN` | Owner from path = username in URL; `https://owner:TOKEN@github.com/owner/repo.git` |
+| GitHub | `GITHUB_TOKEN` or `GH_TOKEN`; per-org: `GITHUB_TOKEN_<Org>` (e.g. `GITHUB_TOKEN_DeepSpringAI`, `GITHUB_TOKEN_foundation_models`) | Owner from path = username; script picks token by org (IntApp vs foundation-models / DeepSpringAI). |
 | GitLab | `GITLAB_TOKEN` or `GLPAT` | HTTPS clone, API |
 | Hugging Face | `HF_TOKEN` or `HUGGING_FACE_HUB_TOKEN` | Clone HF repos, download models |
 | Docker Hub | `DOCKER_PAT` or `DOCKER_TOKEN` | `docker login` (username + token) |
@@ -46,12 +46,11 @@ Cursor or a small script can read `owner`/`name` from `repos.yaml` and `GITHUB_T
 ## Personal tokens placeholder (GitHub + dev.azure.com/intappdevops)
 
 - **Template:** `config/personal-tokens.env.example` — copy to `~/.config/personal-tokens.env`, fill token values only. Owner/org comes from the path; we skip a separate username.
-- **Building URLs:** When asked for a **github.com/...** or **dev.azure.com/intappdevops/...** URL, use **owner (or org) from the input path** as the username in the URL:
-  - **GitHub:** `https://<owner-from-path>:${GITHUB_TOKEN}@github.com/owner/repo.git` (e.g. `github.com/DeepSpringAI/repo` → `https://DeepSpringAI:GITHUB_TOKEN@github.com/DeepSpringAI/repo.git`)
-  - **Azure DevOps (intappdevops):** `https://<org-from-path>:${AZURE_DEVOPS_TOKEN}@dev.azure.com/org/proj/_git/repo`
-- **Script:** From dotfiles repo root, run `./scripts/authenticated-git-url.sh <path>` — it parses owner/org from the path and prints the URL (token from env or `~/.config/personal-tokens.env`):
+- **Building URLs:** Owner/org from the input path = username in the URL. **GitHub:** script selects token by org — `GITHUB_TOKEN_<Org>` (e.g. `GITHUB_TOKEN_DeepSpringAI`, `GITHUB_TOKEN_foundation_models`) if set, else `GITHUB_TOKEN`. Use for IntApp vs foundation-models / DeepSpringAI. **Azure DevOps:** `AZURE_DEVOPS_TOKEN`.
+- **Script:** From dotfiles repo root, run `./scripts/authenticated-git-url.sh <path>` — it parses owner/org and picks the right token from env or `~/.config/personal-tokens.env`:
   ```bash
   ./scripts/authenticated-git-url.sh github.com/DeepSpringAI/repo
+  ./scripts/authenticated-git-url.sh github.com/foundation-models/repo
   ./scripts/authenticated-git-url.sh dev.azure.com/intappdevops/org/proj/_git/repo
   ```
 

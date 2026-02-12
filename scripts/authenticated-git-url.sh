@@ -1,10 +1,11 @@
 #!/usr/bin/env bash
 # Build authenticated git URL: https://OWNER:TOKEN@host/path
-# Owner/org is taken from the input path (same as username); only token from env.
+# Owner/org is taken from the input path (same as username); token from env, per-org overrides supported.
 # Usage: authenticated-git-url.sh <path-or-url>
-#   github.com/DeepSpringAI/repo   → https://DeepSpringAI:GITHUB_TOKEN@github.com/DeepSpringAI/repo.git
-#   dev.azure.com/intappdevops/... → https://intappdevops:AZURE_DEVOPS_TOKEN@dev.azure.com/intappdevops/...
-# Credentials: env vars GITHUB_TOKEN, AZURE_DEVOPS_TOKEN (or ~/.config/personal-tokens.env).
+#   github.com/DeepSpringAI/repo     → https://DeepSpringAI:GITHUB_TOKEN_DeepSpringAI@... (or GITHUB_TOKEN)
+#   github.com/foundation-models/repo → https://foundation-models:GITHUB_TOKEN_foundation_models@...
+#   dev.azure.com/intappdevops/...   → https://intappdevops:AZURE_DEVOPS_TOKEN@dev.azure.com/intappdevops/...
+# Credentials: ~/.config/personal-tokens.env or env. GitHub: GITHUB_TOKEN or GITHUB_TOKEN_<Org> (e.g. GITHUB_TOKEN_DeepSpringAI, GITHUB_TOKEN_foundation_models).
 
 set -e
 PATH_RAW="${1:?Usage: $0 <path-or-url>}"
@@ -18,11 +19,14 @@ path="${path#http://}"
 path="${path%.git}"
 
 if [[ "$path" == github.com/* ]]; then
-  # Owner = first path segment (same as username in URL); we skip a separate GITHUB_USERNAME
+  # Owner = first path segment (same as username in URL)
   owner="${path#github.com/}"
   owner="${owner%%/*}"
-  token="${GITHUB_TOKEN:-$GH_TOKEN}"
-  token="${token:?Set GITHUB_TOKEN or GH_TOKEN}"
+  # Per-org token: GITHUB_TOKEN_<Org> with hyphens → underscores (e.g. foundation-models → foundation_models)
+  org_key="${owner//-/_}"
+  var_name="GITHUB_TOKEN_${org_key}"
+  token="${!var_name:-${GITHUB_TOKEN:-$GH_TOKEN}}"
+  token="${token:?Set GITHUB_TOKEN, GH_TOKEN, or ${var_name} for github.com/${owner}}"
   # https://owner:TOKEN@github.com/owner/repo.git
   [[ "$path" == *.git ]] || path="${path}.git"
   echo "https://${owner}:${token}@${path}"

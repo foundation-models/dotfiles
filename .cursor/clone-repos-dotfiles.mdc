@@ -1,0 +1,30 @@
+---
+description: Clone repos using dotfiles authenticated clone (correct token per org)
+alwaysApply: true
+---
+
+# Clone Repos — Use Dotfiles Authenticated Clone
+
+When the user asks to **clone a repo** (GitHub or dev.azure.com/intappdevops), perform the clone **automatically** using the workspace **dotfiles** flow. Do not use raw `git clone` with SSH or unauthenticated HTTPS.
+
+## How to clone
+
+1. **From workspace dotfiles:** Run the dotfiles `make clone` target so the correct token is used:
+   - **GitHub:** `scripts/authenticated-git-url.sh` picks the token by **owner**: `GITHUB_TOKEN_DeepSpringAI`, `GITHUB_TOKEN_foundation_models`, or fallback `GITHUB_TOKEN` (from `~/.config/personal-tokens.env` or env). IntApp vs foundation-models / DeepSpringAI is handled by these per-org tokens.
+   - **Azure DevOps:** uses `AZURE_DEVOPS_TOKEN` for dev.azure.com/intappdevops.
+
+2. **Command (from workspace root):**
+   ```bash
+   cd dotfiles && make clone REPO=<path> DEST=../<repo-name>
+   ```
+   - `REPO` = full path, e.g. `github.com/DeepSpringAI/presenter` or `github.com/foundation-models/dotfiles` or `dev.azure.com/intappdevops/AI/_git/ai-helm-charts`.
+   - `DEST` = where to clone (default is repo name). Use `DEST=../<name>` to clone into workspace root.
+
+3. **Tokens:** Ensure `~/.config/personal-tokens.env` exists and exports the right vars (see `dotfiles/config/personal-tokens.env.example`). The script sources it and selects the token automatically; no need to set env in the request.
+
+4. **If clone fails** (e.g. "Set GITHUB_TOKEN or ..."): Remind the user to add the matching token to `~/.config/personal-tokens.env` (e.g. `GITHUB_TOKEN_DeepSpringAI` for DeepSpringAI repos, `GITHUB_TOKEN_foundation_models` for foundation-models).
+
+## Summary
+
+- **Do:** Use `make -C dotfiles clone REPO=... DEST=...` (or `cd dotfiles && make clone ...`) so tokens are resolved automatically.
+- **Don’t:** Use `git clone https://github.com/...` or `git clone git@github.com:...` unless the user explicitly asks for SSH and has keys configured.

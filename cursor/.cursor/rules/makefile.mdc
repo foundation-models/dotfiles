@@ -1,0 +1,13 @@
+---
+description: Makefile conventions (PHONY, help, check-proxy, variables)
+globs: Makefile
+alwaysApply: false
+---
+
+# Makefile
+
+- First line: comment stating repo name and "follow .cursor/rules.md" (e.g. `# finetuning – follow .cursor/rules.md (proxy, UV, docs/progress.md)`).
+- Declare `.PHONY` for all targets at the top.
+- Every target: one-line `##` help (e.g. `check-proxy: ## Check that LLM proxy is running`).
+- LLM-using targets: depend on `check-proxy` (or equivalent).
+- Centralize variables at top (e.g. `PROXY_URL`, `CONFIG_PATH`, `IMAGE_TAG`).

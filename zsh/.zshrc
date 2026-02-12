@@ -28,8 +28,16 @@ for f in ~/.zsh_exports ~/.zsh_aliases ~/.zsh_functions; do
 done
 unset f
 
+# Short list (reverse time, all, classify)
+alias l='ls -lrtFa'
+
 # Private overrides (git user, tokens, machine-specific) — do not commit
 [[ -r ~/.zsh_extra && -f ~/.zsh_extra ]] && source ~/.zsh_extra
 
 # Prompt (simple: cwd and %#)
 PS1='%1~ %# '
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/Hossein.Akhlaghpour/.lmstudio/bin"
+# End of LM Studio CLI section
+

@@ -1,0 +1,11 @@
+---
+description: Deploy layout (Helm, Dockerfile, no source COPY when workspace mounted)
+globs: deploy/**,Dockerfile
+alwaysApply: false
+---
+
+# Deploy (Helm + Docker)
+
+- Layout: `deploy/chart/` (Helm chart), `deploy/values-aks.yaml` (or env-specific), `deploy/README.md` (credentials, quick start, layout).
+- Dockerfile: when workspace is mounted in the pod, do **not** COPY app source; copy only `pyproject.toml` and `uv.lock`, run `uv sync`. Include `uv`, `make`, and SOPS if needed in the image.
+- Keep deploy standalone: no hardcoded paths to other repos (e.g. copy chart via `make copy-chart SOURCE_CHART=...`).

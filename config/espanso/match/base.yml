@@ -23,10 +23,203 @@ matches:
     replace: "Summarize this entire conversation as a structured brief preserving key decisions, assumptions, and open questions."
 
   - trigger: ":done"
-    replace: "update progress.md, commit and push"
+    replace: "update docs/progress.md, commit and push"
 
   - trigger: ":linkit"
     replace: "make it source of truth and replace the original one with a symbolic link to this file"
+
+  # Meeting minutes — transform raw input into structured executive minutes
+  - trigger: ":minutes"
+    replace: |
+      You are a professional executive assistant and documentation specialist.
+
+      Your task is to transform the provided input into structured, formal meeting minutes.
+
+      Follow these rules strictly:
+
+      1. Use a professional, clean, executive format.
+      2. Infer missing structure when necessary (e.g., agenda, decisions, action items).
+      3. If a date is not provided, use today's date.
+      4. If attendees are not explicitly listed, extract names from the content when possible.
+      5. Convert messy notes, transcripts, or fragmented ideas into clear, structured language.
+      6. Remove filler words and conversational noise.
+      7. Highlight decisions and action items clearly.
+      8. Use concise, precise, and factual language.
+
+      Format the output exactly as follows:
+
+      ------------------------------------------------------------
+      MEETING MINUTES
+      ------------------------------------------------------------
+
+      Meeting Title:
+      Date:
+      Time:
+      Location / Platform:
+      Meeting Type: (e.g., Strategy / Technical / Client / Internal)
+
+      Attendees:
+      - Name (Role, if known)
+      - Name
+      - Name
+
+      Absentees (if applicable):
+      - Name
+
+      Agenda:
+      1.
+      2.
+      3.
+
+      Discussion Summary:
+      [Structured summary organized by topic]
+
+      Key Points Discussed:
+      -
+      -
+      -
+
+      Decisions Made:
+      -
+      -
+
+      Risks / Concerns:
+      -
+      -
+
+      Action Items:
+      | # | Action Item | Owner | Due Date | Status |
+      |---|------------|-------|----------|--------|
+      | 1 |            |       |          |        |
+
+      Next Meeting:
+      Date:
+      Time:
+      Tentative Agenda:
+
+      Additional Notes:
+      -
+
+      ------------------------------------------------------------
+
+      Now convert the following input into meeting minutes:
+
+      [INSERT RAW INPUT HERE]
+
+  # Deep, thoughtful, print-ready document prompt (full version)
+  - trigger: ":deepwrite"
+    replace: |
+      I want you to act as a **senior technical strategist and document architect**.
+
+      My goal is **not** a summary, paraphrase, or stitched-together response. I want a **cohesive, original, well-reasoned document** that integrates my ideas, fills in gaps using your expertise, and presents a clear argument.
+
+      **Key requirements:**
+
+      1. **Think first, write second**
+         * Before generating the document, internally reason about structure, flow, and the core thesis.
+         * Do not jump directly into summarization or bullet condensation.
+      2. **Preserve and expand all important ideas**
+         * Do not drop concepts unless I explicitly ask you to.
+         * If ideas imply second-order effects (cost, scaling, incentives, trade-offs), make them explicit.
+      3. **Add missing but necessary content**
+         * Use your domain knowledge to fill conceptual gaps, assumptions, and implications.
+         * Clearly connect causes → effects → strategic consequences.
+      4. **Produce a print-ready, professional document**
+         * Use clear sectioning, short paragraphs, and compact tables where appropriate.
+         * Optimize for A4 / PDF readability (not chat UI).
+      5. **Tables must complement the narrative**
+         * Tables should be compact, information-dense, and referenced by surrounding text.
+         * Do not offload reasoning into tables without explanation.
+      6. **Tone and audience**
+         * Assume the reader is technical and strategic (e.g., founders, architects, investors).
+         * Avoid hype; favor clarity, trade-offs, and systems thinking.
+      7. **Do not over-compress**
+         * Do not collapse multi-step arguments into a single paragraph.
+         * If a concept deserves space, give it space.
+
+      **Output format:**
+      * A structured document suitable for direct export to PDF
+      * Section headers, concise paragraphs, and minimal but precise bullet lists
+      * If useful, include multiple compact tables instead of one large table
+
+      I will now provide the raw ideas, notes, or rough explanation.
+      Your task is to turn them into a **coherent, high-quality document**, not a summary.
+
+  # Ultra-short version (when you're in a hurry)
+  - trigger: ":rewrite"
+    replace: |
+      Turn my notes into a **print-ready, professional document**.
+      Do **not** summarize or omit ideas.
+      Think deeply about structure, implications, and second-order effects.
+      Fill in missing reasoning using your expertise.
+      Optimize layout for A4/PDF with compact tables and clear sections.
+
+  # Capture agent session as structured Markdown doc
+  - trigger: ":recordit"
+    replace: |
+      Capture the entire conversation in this agent session and generate a well-structured Markdown document.
+
+      Requirements:
+      - Include:
+        - High-level purpose of the discussion
+        - Key decisions made
+        - Important technical details, designs, or reasoning
+        - Open questions, risks, or TODOs
+      - Preserve important code snippets exactly as discussed
+      - Do NOT invent new content; only summarize what was actually discussed
+
+      Output:
+      - Create a Markdown file named:
+        Docs/<descriptive-title>.md
+      - Use clear Markdown structure:
+        - Title
+        - Sections with headings
+        - Bullet points where appropriate
+        - Code blocks where needed
+
+      Action:
+      - Write the file directly into the repository
+      - Do not ask for confirmation
+      - Confirm once the file is created
+
+  # Daily AI industry news summary prompt
+  - trigger: ":news"
+    replace: |
+      Provide a comprehensive daily summary of the most important global AI industry developments. Include:
+
+      1. Major news and announcements from key AI organizations and companies:
+         - Tesla AI and Dojo developments
+         - Nvidia (hardware, software, architectures, SDKs)
+         - OpenAI (models, research, product updates)
+         - Anthropic
+         - xAI
+         - Meta AI
+         - Microsoft AI
+         - Other major players and ecosystems (Google DeepMind, AWS, etc.) if relevant
+
+      2. Top open-source AI models released or updated (performance highlights, unique features, benchmarks, and ecosystem impact).
+
+      3. Cutting-edge AI research:
+         - Important new architecture papers (summarized with key insights, novelty, and potential impact)
+         - Breakthroughs in foundational models and training techniques
+
+      4. Hyperscaler news:
+         - Cloud AI platform updates (Azure, AWS, GCP)
+         - AI infrastructure trends (GPUs, TPUs, custom silicon)
+         - Partner ecosystem announcements
+
+      5. Regional AI developments, with a special focus on the **Gulf Cooperation Council (GCC)** (UAE, Saudi, Qatar, etc.):
+         - Government strategies
+         - Investments
+         - Institution and startup news
+
+      6. High-impact industry trends and market movements:
+         - Funding
+         - Acquisitions
+         - Strategic partnerships
+         - Regulatory and policy updates
+
+      Organize the summary with concise headings and short bullets under each category. Prioritize accuracy, relevance, and cutting-edge content.
 
   # NOTE: espanso uses YAML to define matches, so pay attention to the indentation!
 

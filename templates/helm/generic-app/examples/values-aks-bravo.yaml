@@ -1,0 +1,63 @@
+# Example override for dev "bravo" style AKS scheduling (dedicated node pool + taint).
+# Adjust names, resources, and image for your service.
+
+replicaCount: 1
+debug: true
+
+image:
+  repository: docker.artifactory.dev.intapp.com/ai/REPLACE_ME_APP
+  pullPolicy: IfNotPresent
+  tag: REPLACE_ME_TAG
+
+imagePullSecrets:
+  - name: docker
+  - name: docker-dev
+  - name: docker-live
+
+service:
+  type: ClusterIP
+  port: 8888
+
+resources:
+  requests:
+    cpu: "1800m"
+    memory: 12Gi
+  limits:
+    cpu: "4"
+    memory: 16Gi
+
+automountServiceAccountToken: false
+
+affinity:
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.azure.com/agentpool
+              operator: In
+              values:
+                - d4asv5
+            - key: node.kubernetes.io/instance-type
+              operator: In
+              values:
+                - Standard_D4as_v5
+
+tolerations:
+  - key: dedicated
+    operator: Equal
+    value: REPLACE_ME_DEDICATED
+    effect: NoSchedule
+
+kafka:
+  enabled: true
+  sidecar: true
+  replicaCount: 1
+  image: docker.artifactory.dev.intapp.com/ai/kafka:7.5.0
+  resources:
+    requests:
+      cpu: 250m
+      memory: 1Gi
+    limits:
+      cpu: "1"
+      memory: 2Gi
+
