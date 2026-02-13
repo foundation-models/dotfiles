@@ -208,7 +208,7 @@ After install:
 4. **Enroll your face:** `sudo howdy add` (follow prompts).
 5. **Test:** `sudo howdy test` or use sudo in a terminal; you should get a face scan option.
 
-PAM is configured in `/etc/pam.d/common-auth` by the package. To disable: `sudo howdy disable`; to re-enable: `sudo howdy enable`.
+PAM is configured in `/etc/pam.d/common-auth` by the package (so sudo and login use face). For **face login at the GDM graphical login screen**, the `gdm` user must be able to access the camera: `sudo usermod -aG video gdm`. Restart GDM or reboot for it to take effect; then at the login screen you can use face recognition (Howdy runs first, then password if needed). To disable Howdy: `sudo howdy disable`; to re-enable: `sudo howdy enable`.
 
 ---
 

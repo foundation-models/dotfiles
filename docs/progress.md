@@ -2,6 +2,14 @@
 
 Append-only log of Cursor/Codex actions in this repository.
 
+## 2026-02-13
+
+- **Face detection login (Howdy)** — Installed and configured Howdy for Windows Hello–style face recognition on Ubuntu 24.04 (Dell XPS 15 9510).
+  - Added PPA `ppa:ubuntuhandbook1/howdy` (Ubuntu 24.04–compatible). Installed `howdy` and `v4l-utils`.
+  - Internal webcam: installed `linux-modules-ipu6-$(uname -r)` for Intel IPU6 (MIPI); after reboot camera appears as UVC (`/dev/video0`). User and `gdm` added to `video` group for camera access at login.
+  - PAM uses Howdy in `common-auth`; face login at GDM login screen works after `sudo usermod -aG video gdm` and restart/reboot.
+  - Docs: `docs/setup-new-desktop.md` — section "10. Howdy (face recognition login)" with install, IPU6 driver, BIOS note, GDM video group. `docs/system-info.md` added with machine/OS/CPU/GPU/camera notes.
+
 ## 2026-02-12
 
 - Searched repo for Azure AKS node pool / agent pool definitions (`nodepool`, `agentpool`, Terraform `azurerm_kubernetes_cluster_node_pool`, ARM/Bicep `agentPoolProfiles`).
