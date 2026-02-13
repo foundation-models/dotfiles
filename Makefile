@@ -37,6 +37,18 @@ decrypt-confidential:
 	sops --decrypt $(CONFIDENTIAL_ENC) | tar -xf -
 	@echo "Extracted confidential/."
 
+# Reconstruct all ~/.config/*.toml from the encrypted confidential.tar.enc.
+# Prompts for SOPS age passphrase (and key file path if SOPS_AGE_KEY_FILE is not set).
+# Run from dotfiles root. Requires: sops, age.
+restore-config-toml:
+	@$(DOTFILES_DIR)scripts/restore-config-toml.sh
+
+# Install all desktop packages (Chrome, Pritunl, Docker, Slack, Telegram, Espanso, Tailscale, Solaar, ngrok, Howdy).
+# Ubuntu/Debian only. Skips already-installed items. Run from dotfiles root; sudo used throughout.
+# After: log out/in for docker group; run ./install.sh config for Espanso; run sudo tailscale up if needed.
+install-desktop-packages:
+	@$(DOTFILES_DIR)scripts/install-desktop-packages.sh
+
 # Encrypt and stage the encrypted file for commit (does not commit or push).
 commit-encrypted-confidential: encrypt-confidential
 	git add $(CONFIDENTIAL_ENC)
